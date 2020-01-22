@@ -32,12 +32,10 @@ export default url => {
 
     Axios(baseUrl + url, requestOptions)
       .then(res => {
-        console.log('success', res);
         setIsLoading(false);
         setResponse(res.data);
       })
       .catch(err => {
-        console.log('error', err);
         setIsLoading(false);
         setError(err.response.data);
       });
