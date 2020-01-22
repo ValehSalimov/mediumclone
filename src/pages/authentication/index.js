@@ -1,8 +1,9 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import { Link, Redirect } from 'react-router-dom';
 
 import useFetch from '../../hooks/useFetch';
 import useLocalStorage from '../../hooks/useLocalStorage';
+import { CurrentUserContext } from '../../contexts/currentUser';
 
 const Authentication = props => {
   const isLogin = props.match.path === '/login';
@@ -17,10 +18,14 @@ const Authentication = props => {
   const [isSuccessfullSubmit, setisSuccessfullSubmit] = useState(false);
   const [{ response, isLoading }, doFetch] = useFetch(apiUrl);
   const [token, setToken] = useLocalStorage('token');
+  const [currentUserState, setCurrentUserState] = useContext(
+    CurrentUserContext
+  );
+  console.log('ccurent', currentUserState);
 
   const handleSubmit = e => {
     e.preventDefault();
-    const user  = isLogin ? {email, password} : {email, password, username};
+    const user = isLogin ? { email, password } : { email, password, username };
     doFetch({
       method: 'post',
       data: {
@@ -30,16 +35,22 @@ const Authentication = props => {
   };
 
   useEffect(() => {
-    if (!response){
-      return 
+    if (!response) {
+      return;
     }
 
     setToken(response.user.token);
     setisSuccessfullSubmit(true);
-  }, [response, setToken])
+    setCurrentUserState(state => ({
+      ...state,
+      isLoggedIn: true,
+      isLoading: false,
+      currentUser: response.user,
+    }));
+  }, [response, setToken]);
 
-  if(isSuccessfullSubmit) {
-    return <Redirect to="/" />
+  if (isSuccessfullSubmit) {
+    return <Redirect to="/" />;
   }
 
   return (
