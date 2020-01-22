@@ -15,16 +15,11 @@ const Authentication = props => {
   const [password, setPassword] = useState('');
   const [username, setUsername] = useState('');
   const [isSuccessfullSubmit, setisSuccessfullSubmit] = useState(false);
-  const [{ response, isLoading, error }, doFetch] = useFetch(apiUrl);
+  const [{ response, isLoading }, doFetch] = useFetch(apiUrl);
   const [token, setToken] = useLocalStorage('token');
-
-  // console.log('token', token)
-
-  // console.log(isLogin);
 
   const handleSubmit = e => {
     e.preventDefault();
-    // console.log(email, password);
     const user  = isLogin ? {email, password} : {email, password, username};
     doFetch({
       method: 'post',
@@ -41,7 +36,7 @@ const Authentication = props => {
 
     setToken(response.user.token);
     setisSuccessfullSubmit(true);
-  }, [response])
+  }, [response, setToken])
 
   if(isSuccessfullSubmit) {
     return <Redirect to="/" />
