@@ -9,6 +9,7 @@ import Authentication from './pages/authentication';
 import CreateArticle from './pages/createArticle';
 import EditArticle from './pages/editArticle';
 import Settings from './pages/settings';
+import UserProfile from './pages/userProfile';
 
 // eslint-disable-next-line react/display-name
 export default () => {
@@ -23,6 +24,8 @@ export default () => {
       <Route path="/articles/new" component={CreateArticle} />
       <Route path="/articles/:slug/edit" component={EditArticle} />
       <Route path="/articles/:slug" component={Article} />
+      <Route path="/profiles/:slug" component={UserProfile} />
+      <Route path="/profiles/:slug/favorites" component={UserProfile} />
     </Switch>
   );
 };
