@@ -6,6 +6,7 @@ import TagFeed from './pages/tagFeed';
 import YourFeed from './pages/yourFeed';
 import Article from './pages/article';
 import Authentication from './pages/authentication';
+import CreateArticle from './pages/createArticle';
 
 // eslint-disable-next-line react/display-name
 export default () => {
@@ -16,6 +17,7 @@ export default () => {
       <Route path="/tags/:slug" component={TagFeed} />
       <Route path="/login" component={Authentication} />
       <Route path="/register" component={Authentication} />
+      <Route path="/articles/new" component={CreateArticle} />
       <Route path="/articles/:slug" component={Article} />
     </Switch>
   );
