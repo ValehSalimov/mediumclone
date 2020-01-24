@@ -18,10 +18,6 @@ const App = () => {
       </CurrentUserChecker>
     </CurrentUserProvider>
   );
-<<<<<<< HEAD
 }; 
-=======
-};
->>>>>>> parent of 33b9a69... test
 
 ReactDOM.render(<App />, document.getElementById('root'));
