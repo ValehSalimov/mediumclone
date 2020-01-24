@@ -18,6 +18,6 @@ const App = () => {
       </CurrentUserChecker>
     </CurrentUserProvider>
   );
-}; 
+};test
 
 ReactDOM.render(<App />, document.getElementById('root'));
