@@ -6,6 +6,7 @@ import Loading from '../../components/loading';
 import ErrorMessage from '../../components/errorMessage';
 import TagList from '../../components/tagList';
 import { CurrentUserContext } from '../../contexts/currentUser';
+import ArticleMeta from './components/article-meta';
 
 const Article = props => {
   const slug = props.match.params.slug;
@@ -41,7 +42,7 @@ const Article = props => {
   const deleteArticle = () => {
     doDeleteArticle({
       method: 'delete',
-    })
+    });
     console.log('de');
   };
 
@@ -50,13 +51,13 @@ const Article = props => {
   }, [doFetch]);
 
   useEffect(() => {
-    if(!deleteArticleResponse) return;
+    if (!deleteArticleResponse) return;
 
     setIsSuccessfullDelete(true);
-  }, [deleteArticleResponse])
+  }, [deleteArticleResponse]);
 
   if (isSuccessfullDelete) {
-    return <Redirect to='/' />
+    return <Redirect to="/" />;
   }
 
   return (
@@ -65,33 +66,16 @@ const Article = props => {
         {!fetchArticleIsLoading && fetchArticleResponse && (
           <div className="container">
             <h1>{fetchArticleResponse.article.title}</h1>
-            <div className="article-meta">
-              <Link to={`/profiles/${fetchArticleResponse.article.author.username}`}>
-                <img src={fetchArticleResponse.article.author.image} alt="" />
-              </Link>
-              <div className="info">
-                <Link to={`/profiles/${fetchArticleResponse.article.author.username}`}>
-                  {fetchArticleResponse.article.author.username}
-                </Link>
-                <span className="date">{fetchArticleResponse.article.createdAt}</span>
-              </div>
-              {isAuthor() && (
-                <span>
-                  <Link
-                    className="btn btn-outline-secondary btn-sm"
-                    to={`/articles/${fetchArticleResponse.article.slug}/edit`}>
-                    <i className="ion-edit"></i>
-                    Edit Article
-                  </Link>
-                  <button
-                    className="btn btn-outline-danger btn-sm"
-                    onClick={deleteArticle}>
-                    <i className="ion-trash-a"></i>
-                    Delete article
-                  </button>
-                </span>
-              )}
-            </div>
+            <ArticleMeta
+              info={{
+                username: fetchArticleResponse.article.author.username,
+                image: fetchArticleResponse.article.author.image,
+                createdAt: fetchArticleResponse.article.createdAt,
+                slug: fetchArticleResponse.article.slug,
+              }}
+              onDelete={deleteArticle}
+              isAuthor={isAuthor}
+            />
           </div>
         )}
       </div>
@@ -105,6 +89,21 @@ const Article = props => {
                 <p>{fetchArticleResponse.article.body}</p>
               </div>
               <TagList tags={fetchArticleResponse.article.tagList} />
+              <hr />
+            </div>
+            <div className="col-xs-12">
+              <div className="article-actions ">
+                <ArticleMeta
+                  info={{
+                    username: fetchArticleResponse.article.author.username,
+                    image: fetchArticleResponse.article.author.image,
+                    createdAt: fetchArticleResponse.article.createdAt,
+                    slug: fetchArticleResponse.article.slug,
+                  }}
+                  onDelete={deleteArticle}
+                  isAuthor={isAuthor}
+                />
+              </div>
             </div>
           </div>
         )}
