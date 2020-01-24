@@ -13,4 +13,3 @@ export const getPaginator = search => {
 
   return {currentPage, offset}
 }
-// 

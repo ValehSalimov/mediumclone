@@ -23,7 +23,7 @@ const UserArticles = ({ username, location, isFavorites, url }) => {
 
   useEffect(() => {
     doFetch();
-  }, [doFetch, isFavorites]);
+  }, [doFetch, isFavorites, apiUrl]);
  
   return (
     <div>
